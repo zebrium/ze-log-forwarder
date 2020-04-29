@@ -23,8 +23,8 @@ docker run --name="zlog-forwarder" --restart=always \
     zebrium/log-forwarder:latest
 ```
 2. To support syslog over TLS and UDP:
-  1. Create/copy root certificate, host certificate and host private key files to a directory on the host which will be running log-forwarder container.
-  2. Run the following command as root:
+   1. Create/copy root certificate, host certificate and host private key files to a directory on the host which will be running log-forwarder container.
+   2. Run the following command as root:
 ```
 docker run --name="zlog-forwarder" --restart=always \
     -p 5514:5514/tcp \
@@ -42,14 +42,14 @@ docker run --name="zlog-forwarder" --restart=always \
 1. Use host IP as syslog server IP address, and port 5514 for syslog port.
 
 2. Configure rsyslog
-  1. To use UDP, add the following to the end of rsyslog configuration file
-     *.*    @<LOG_FORWARDER_HOST_IP>:5514
-  2. To use TCP, add the following to the end of rsyslog configuration file
-     *.*    @@<LOG_FORWARDER_HOST_IP>:5514
-  3. To use TLS, copy client_configs/rsyslog/25-zebrium.conf to /etc/rsyslog.d/,
-    Open the file, replace CLIENT_SSL_CERT_PATH with real client SSL
-    certificate path, and change SERVER_DOMAIN_NAME to the domain of the
-    host running log-forwarder container, and restart rsyslog service.
+   1. To use UDP, add the following to the end of rsyslog configuration file
+      `*.*    @<LOG_FORWARDER_HOST_IP>:5514`
+   2. To use TCP, add the following to the end of rsyslog configuration file
+      `*.*    @@<LOG_FORWARDER_HOST_IP>:5514`
+  3. To use TLS:
+      1. copy client_configs/rsyslog/25-zebrium.conf to /etc/rsyslog.d/,
+      2. Open the file, replace `CLIENT_SSL_CERT_PATH` with real client SSL certificate path, change `SERVER_HOST` to the hostname running log-forwarder container, and `SERVER_DOMAIN_NAME` to the domain of the host running log-forwarder container.
+      3. Restart rsyslog service.
 
 ### Setup
 No additional setup is required
