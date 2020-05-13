@@ -14,7 +14,7 @@ Our github repository is located [here](https://github.com/zebrium/ze-log-forwar
 
 1. To support syslog over TCP and UDP, run the following command as root:
 ```
-docker run --name="zlog-forwarder" --restart=always \
+docker run -d --name="zlog-forwarder" --restart=always \
     -p 5514:5514/tcp \
     -p 5514:5514/udp \
     -e ZE_LOG_COLLECTOR_URL="<ZE_LOG_COLLECTOR_URL>" \
@@ -26,7 +26,7 @@ docker run --name="zlog-forwarder" --restart=always \
    1. Create/copy root certificate, host certificate and host private key files to a directory on the host which will be running log-forwarder container.
    2. Run the following command as root:
 ```
-docker run --name="zlog-forwarder" --restart=always \
+docker run -d --name="zlog-forwarder" --restart=always \
     -p 5514:5514/tcp \
     -p 5514:5514/udp \
     -v <USER_SERVER_CERTS_KEY_DIR>:/fluentd/tls
