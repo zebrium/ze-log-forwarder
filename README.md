@@ -1,5 +1,6 @@
 # LOG FORWARDER DETAILS
-Zebrium's Log Forwarder accepts syslog and sends logs to Zebrium for automated Anomaly detection.
+Zebrium's Log Forwarder accepts both syslogs and raw logs and forwards to Zebrium for automated Anomaly detection.
+
 Our github repository is located [here](https://github.com/zebrium/ze-log-forwarder).
 
 # ze-log-forwarder
@@ -11,9 +12,9 @@ Our github repository is located [here](https://github.com/zebrium/ze-log-forwar
 2. For syslog forwarding, make sure host firewall does not block port 5514 for both TCP and UDP. For TCP forwarding, make sure TCP port 5170 is open.
 3. Install docker software if it is not installed.
 
-### Forward Syslog
+## Forward Syslog
 
-#### Installation
+### Installation
 
 1. To support syslog over TCP and UDP, run the following command as root, make sure you replace `<...>` with real values.
 ```
@@ -49,7 +50,7 @@ docker run -d --name="zlog-forwarder" --restart=always \
       `*.*    @<LOG_FORWARDER_HOST_IP>:5514`
    2. To use TCP, add the following to the end of rsyslog configuration file
       `*.*    @@<LOG_FORWARDER_HOST_IP>:5514`
-  3. To use TLS:
+   3. To use TLS:
       1. copy client_configs/rsyslog/25-zebrium.conf to /etc/rsyslog.d/,
       2. Open the file, replace `CLIENT_SSL_CERT_PATH` with real client SSL certificate path, change `SERVER_HOST` to the hostname running log-forwarder container, and `SERVER_DOMAIN_NAME` to the domain of the host running log-forwarder container.
       3. Restart rsyslog service.
@@ -58,6 +59,8 @@ docker run -d --name="zlog-forwarder" --restart=always \
 No additional setup is required
 
 ## Forward Log via TCP
+
+### Installation
 
 Run the following command as root, make sure you replace `<...>` with real values.
 ```
@@ -73,6 +76,9 @@ docker run -d --name="zlog-forwarder" --restart=always \
 ```
 
 TIME_ZONE should be the timezone of log messages, for example, "UTC" or "EDT".
+
+### Setup
+No additional setup is required
 
 ## Testing your installation
 Once the log forwarder software has been deployed in your environment, your logs and anomaly detection will be available in the Zebrium UI.
