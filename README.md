@@ -5,14 +5,17 @@ Our github repository is located [here](https://github.com/zebrium/ze-log-forwar
 # ze-log-forwarder
 
 ## Getting Started
+
 ### Preparation
-1. By default ze-log-forwarder container runs syslog server on TCP and UDP port 5514. Please make sure syslog clients can reach host IP on port 5514.
-2. Make sure host firewall does not block port 5514 for both TCP and UDP.
+1. By default ze-log-forwarder container uses TCP and UDP port 5514 for syslog, and TCP port 5170 for TCP forwarding. Please make sure clients can reach host IP on those ports.
+2. For syslog forwarding, make sure host firewall does not block port 5514 for both TCP and UDP. For TCP forwarding, make sure TCP port 5170 is open.
 3. Install docker software if it is not installed.
 
-### Installation
+### Forward Syslog
 
-1. To support syslog over TCP and UDP, run the following command as root:
+#### Installation
+
+1. To support syslog over TCP and UDP, run the following command as root, make sure you replace `<...>` with real values.
 ```
 docker run -d --name="zlog-forwarder" --restart=always \
     -p 5514:5514/tcp \
@@ -37,7 +40,7 @@ docker run -d --name="zlog-forwarder" --restart=always \
     zebrium/log-forwarder:latest
 ```
 
-## Client Configuration
+### Client Configuration
 
 1. Use host IP as syslog server IP address, and port 5514 for syslog port.
 
@@ -54,8 +57,25 @@ docker run -d --name="zlog-forwarder" --restart=always \
 ### Setup
 No additional setup is required
 
+## Forward Log via TCP
+
+Run the following command as root, make sure you replace `<...>` with real values.
+```
+docker run -d --name="zlog-forwarder" --restart=always \
+    -p 5170:5170/tcp
+    -e ZE_LOG_COLLECTOR_URL="<ZE_LOG_COLLECTOR_URL>" \
+    -e ZE_LOG_COLLECTOR_TOKEN="<ZE_LOG_COLLECTOR_TOKEN>" \
+    -e ZE_DEPLOYMENT_NAME="<DEPLOYMENT_NAME>" \
+    -e ZE_TCP_HOSTNAME="<TCP_FORWARDER_HOSTNAME>" \
+    -e ZE_TCP_LOGBASE="tcp_forwarder" \
+    -e ZE_TIMEZONE="<TIME_ZONE>" \
+    zebrium/log-forwarder:latest
+```
+
+TIME_ZONE should be the timezone of log messages, for example, "UTC" or "EDT".
+
 ## Testing your installation
-Once the log forwarder software has been deployed in your environment, your syslogs and anomaly detection will be available in the Zebrium UI.
+Once the log forwarder software has been deployed in your environment, your logs and anomaly detection will be available in the Zebrium UI.
 
 ## Contributors
 * Brady Zuo (Zebrium)
