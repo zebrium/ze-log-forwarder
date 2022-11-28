@@ -1,8 +1,6 @@
 [![deprecated](http://badges.github.io/stability-badges/dist/deprecated.svg)](http://github.com/badges/stability-badges)
 
-# DEPRICATED
-
-# LOG FORWARDER DETAILS
+# DEPRICATED: LOG FORWARDER DETAILS
 Zebrium's Log Forwarder accepts both syslogs and raw logs and forwards to Zebrium for automated Anomaly detection.
 
 Our github repository is located [here](https://github.com/zebrium/ze-log-forwarder).
